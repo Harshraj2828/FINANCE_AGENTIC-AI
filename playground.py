@@ -41,7 +41,13 @@ show_tool_calls=True,
 markdown=True,
 )
 
+from fastapi.responses import RedirectResponse
+
 app= Playground(agents=[finance_agent,web_search_agent]).get_app()
+
+@app.get("/")
+def read_root():
+    return RedirectResponse(url="/docs")
 
 if __name__ =="__main__":
     serve_playground_app("playground:app",reload=True)
