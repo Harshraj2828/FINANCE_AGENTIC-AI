@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinAI - Agentic Finance & Search Suite</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Marked.js for Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-glow"></div>
+                    <i data-lucide="cpu" class="logo-icon"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">FinAI</h1>
+                    <span class="brand-subtitle">Agentic Suite</span>
+                </div>
+            </div>
+
+            <nav class="agent-selector-nav">
+                <div class="section-title">Select Agent</div>
+                
+                <!-- Finance Agent -->
+                <button class="agent-card active" data-agent-id="finance">
+                    <div class="agent-card-icon finance-theme">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="agent-card-info">
+                        <div class="agent-name">Finance Agent</div>
+                        <div class="agent-desc">Fundamentals, prices, & analyst ratings</div>
+                    </div>
+                    <div class="active-indicator"></div>
+                </button>
+
+                <!-- Web Search Agent -->
+                <button class="agent-card" data-agent-id="web_search">
+                    <div class="agent-card-icon web-search-theme">
+                        <i data-lucide="globe"></i>
+                    </div>
+                    <div class="agent-card-info">
+                        <div class="agent-name">Web Search Agent</div>
+                        <div class="agent-desc">Web search with sources & latest news</div>
+                    </div>
+                    <div class="active-indicator"></div>
+                </button>
+
+                <!-- Multi-Agent Team -->
+                <button class="agent-card" data-agent-id="team">
+                    <div class="agent-card-icon team-theme">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <div class="agent-card-info">
+                        <div class="agent-name">Multi-Agent Team</div>
+                        <div class="agent-desc">Collaborative finance & search research</div>
+                    </div>
+                    <div class="active-indicator"></div>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-history" id="btn-history">
+                    <i data-lucide="history"></i>
+                    <span>Chat History</span>
+                </button>
+            </div>
+            
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <!-- Top Navigation Bar -->
+            <header class="chat-header">
+                <div class="header-agent-info">
+                    <div id="header-icon-container" class="header-agent-icon finance-theme">
+                        <i data-lucide="trending-up" id="header-icon"></i>
+                    </div>
+                    <div>
+                        <h2 id="header-agent-name" class="header-title">Finance Agent</h2>
+                        <p id="header-agent-status" class="header-subtitle">Ready for market intelligence questions</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-clear" id="btn-clear-chat" title="Clear Chat History">
+                        <i data-lucide="trash-2"></i>
+                        <span>Clear Chat</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Messages Window -->
+            <div class="messages-container" id="messages-container">
+                <!-- Welcome View -->
+                <div class="welcome-container" id="welcome-container">
+                    <div class="welcome-icon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3 class="welcome-title">Welcome to FinAI</h3>
+                    <p class="welcome-subtitle">Ask questions about financials, stock performance, analyst recommendations, or search the web for the latest updates.</p>
+                    
+                    <div class="suggestions-grid" id="suggestions-grid">
+                        <!-- Populated dynamically based on selected agent -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <footer class="chat-input-container">
+                <form class="input-form" id="chat-form">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="user-input" 
+                            placeholder="Ask a financial or search question... (Press Enter to send, Shift+Enter for new line)" 
+                            rows="1"
+                            autocomplete="off"
+                        ></textarea>
+                        <button type="submit" class="btn-send" id="btn-send" disabled>
+                            <i data-lucide="arrow-up"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="footer-note">
+                    FinAI uses advanced agentic models. Verify critical financial details.
+                </div>
+            </footer>
+        </main>
+    </div>
+    <!-- History Modal -->
+    <div class="modal-overlay" id="history-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <i data-lucide="history" class="modal-header-icon"></i>
+                    <h3>Chat History Log</h3>
+                </div>
+                <button class="modal-close" id="btn-close-history" title="Close History">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-sidebar">
+                    <button class="modal-tab active" data-tab="finance">
+                        <i data-lucide="trending-up" class="tab-icon finance-theme"></i>
+                        <span>Finance Agent</span>
+                    </button>
+                    <button class="modal-tab" data-tab="web_search">
+                        <i data-lucide="globe" class="tab-icon web-search-theme"></i>
+                        <span>Web Search Agent</span>
+                    </button>
+                    <button class="modal-tab" data-tab="team">
+                        <i data-lucide="users" class="tab-icon team-theme"></i>
+                        <span>Multi-Agent Team</span>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div class="history-list" id="history-items-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Controller script -->
+    <script src="/script.js"></script>
+</body>
+</html>
